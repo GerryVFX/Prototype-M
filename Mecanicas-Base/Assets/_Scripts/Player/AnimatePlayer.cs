@@ -4,44 +4,55 @@ using UnityEngine;
 
 public class AnimatePlayer : MonoBehaviour
 {
+    //Estados generales y de estatus del jugador
     [SerializeField]
     PlayerMain mainPlayer;
+
+    //Estados de movimiento del jugador
     MovePlayer player_States;
+
+    //Variable para el control de animaciones
     Animator animPlayer;
 
-    
+    //Declaración de variables
     void Start()
     {
-        //GameObject.Find("Player").GetComponent<MovePlayer>();
         mainPlayer = FindObjectOfType<PlayerMain>();
         player_States = FindObjectOfType<MovePlayer>();
         animPlayer = GetComponent<Animator>();
     }
 
+    //Activación de animaciones
     private void FixedUpdate()
     {
         Animations();
     }
 
+    //Gestión de animaciones según estados
     void Animations()
     {
+        //Para caminar
         if (player_States.isWalking)
         {
             animPlayer.SetBool("IsWalk", true);
         }
         else animPlayer.SetBool("IsWalk", false);
 
+        //Para agacharse
         if (player_States.isSneakIdle)
         {
             animPlayer.SetBool("IsSneak", true);
         }
         else animPlayer.SetBool("IsSneak", false);
 
+        //Para correr
         if (player_States.isRunning && !player_States.isSneakIdle)
         {
             animPlayer.SetBool("IsRunning", true);
         }
         else animPlayer.SetBool("IsRunning", false);
+
+        //Para apuntar
         if (mainPlayer.isAim)
         {
             animPlayer.SetBool("IsAim", true);
@@ -49,6 +60,7 @@ public class AnimatePlayer : MonoBehaviour
         else animPlayer.SetBool("IsAim", false);
         if (mainPlayer.isAim)
         {
+            //Para disparar
             if (Input.GetKey(KeyCode.Joystick1Button0))
             {
                 animPlayer.SetTrigger("IsShoot");

@@ -1,20 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
+using Cinemachine; //Se ocupa libreria Cinemachine
 
-public class CamerasSistem : MonoBehaviour
+public class CamerasSystem : MonoBehaviour
 {
+    //Cámara virtual activa
     CinemachineVirtualCamera currentCamera;
+
+    //Camara objetivo al trigger
     public CinemachineVirtualCamera targetCamera;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+    //Detección de collider del jugador 
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -23,9 +20,11 @@ public class CamerasSistem : MonoBehaviour
         }
     }
 
+    //Cambio de cámaras
     void CameraChange()
     {
-        if (GameObject.FindGameObjectWithTag("CurrentCamera") != null)
+        //Detección de la cámara activa
+        if (GameObject.FindGameObjectWithTag("CurrentCamera") != null) 
         {
             if (GameObject.FindGameObjectWithTag("CurrentCamera").GetComponent<CinemachineVirtualCamera>() != null)
             {
@@ -36,6 +35,8 @@ public class CamerasSistem : MonoBehaviour
         {
             currentCamera = null;
         }
+
+        //Nueva asignación de cámara por prioridad
         if (currentCamera != targetCamera || currentCamera == null)
         {
             targetCamera.tag = "CurrentCamera";

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MovePlayer : MonoBehaviour
 {
+    //Slección de control
     public bool control_Modern;
     public bool control_Tank;
 
@@ -27,16 +28,19 @@ public class MovePlayer : MonoBehaviour
     public bool isWalking, isSneakIdle, isSneakWalking, isRunning;
     PlayerMain player_Aim;
 
+    //Variables para velocidad y gravedad
     [SerializeField]
     float player_speed;
     float gravity = 500f;
 
+    //Declaración de variables
     void Start()
     {
         player_controller = GetComponent<CharacterController>();
         player_Aim = GetComponent<PlayerMain>();
     }
 
+    //Detectar estados del jugador
     private void FixedUpdate()
     {
         if (!player_Aim.isAim)
@@ -48,23 +52,22 @@ public class MovePlayer : MonoBehaviour
         StatesPlayer();
     }
 
+    //Movimiento según tipo de control
     void Moving()
     {
         //Selector de control
         if (control_Modern)
         {
-
             MoveWhitModern();
         }
+
         if (control_Tank)
         {
             MoveWhitTank();
-
         }
     }
 
-    //Giro apuntado
-    
+    //Giro apuntado 
     private void Aim()
     {
         move_x = Input.GetAxisRaw("Horizontal");
@@ -88,11 +91,11 @@ public class MovePlayer : MonoBehaviour
         movePLayer = movePLayer * player_speed;        
         player_controller.transform.LookAt(player_controller.transform.position + movePLayer);
 
-        SetGravity();
+        movePLayer.y = -gravity * Time.deltaTime;
 
         player_controller.Move(movePLayer * Time.deltaTime);
     }
-        
+     //Movimiento relativo a la cámara   
     void CamDirection()
     {
         camFoward = micam.transform.forward;
@@ -108,7 +111,7 @@ public class MovePlayer : MonoBehaviour
     //Control de Tanque
     private void MoveWhitTank()
     {
-        //Mover al personaje
+        //Detección del valor para el input para el movimiento
         if (move_x > 0)
         {
             move_x = 1;
@@ -132,12 +135,14 @@ public class MovePlayer : MonoBehaviour
         move_x = Input.GetAxisRaw("Horizontal");
         move_z = Input.GetAxisRaw("Vertical");
 
+        //Variables nomralizadas con respecto al tiempo y velocidad de gito y avance
         float h = move_x * Time.deltaTime * turnSpeed;
         float v = move_z * Time.deltaTime * player_speed;
 
         moving_Foward = false;
         moving_Backward = false;
 
+        //Movimientos
         if (move_z > 0)
         {
             if (!moving_Foward)
@@ -162,11 +167,6 @@ public class MovePlayer : MonoBehaviour
 
         Vector3 turn = new Vector3(0, h, 0);
         transform.Rotate(turn);
-    }
-
-    void SetGravity()
-    {
-        movePLayer.y = -gravity * Time.deltaTime;
     }
 
     void StatesPlayer()
