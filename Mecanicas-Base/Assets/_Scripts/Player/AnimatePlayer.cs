@@ -38,6 +38,20 @@ public class AnimatePlayer : MonoBehaviour
         }
         else animPlayer.SetBool("IsWalk", false);
 
+        //Para caminar hacia atras
+        if (player_States.moving_Backward)
+        {
+            animPlayer.SetBool("IsWalkBack", true);
+        }
+        else animPlayer.SetBool("IsWalkBack", false);
+
+        //Para caminar de lado
+        if (player_States.left_turn)
+        {
+            animPlayer.SetBool("WalkLeft", true);
+        }
+        else animPlayer.SetBool("WalkLeft", false);
+
         //Para agacharse
         if (player_States.isSneakIdle)
         {
@@ -61,7 +75,7 @@ public class AnimatePlayer : MonoBehaviour
         if (mainPlayer.isAim)
         {
             //Para disparar
-            if (Input.GetKey(KeyCode.Joystick1Button0))
+            if (Input.GetKey(KeyCode.Joystick1Button0)||Input.GetButtonDown("Fire1"))
             {
                 animPlayer.SetTrigger("IsShoot");
             }

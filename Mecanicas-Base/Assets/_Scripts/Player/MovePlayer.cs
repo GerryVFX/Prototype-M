@@ -22,7 +22,8 @@ public class MovePlayer : MonoBehaviour
     //Para el movimiento en Control tanque
     float turnSpeed = 150f;
     bool moving_Foward;
-    bool moving_Backward;
+    public bool moving_Backward;
+    public bool left_turn;
 
     //Estados del personaje
     public bool isWalking, isSneakIdle, isSneakWalking, isRunning;
@@ -135,7 +136,7 @@ public class MovePlayer : MonoBehaviour
         move_x = Input.GetAxisRaw("Horizontal");
         move_z = Input.GetAxisRaw("Vertical");
 
-        //Variables nomralizadas con respecto al tiempo y velocidad de gito y avance
+        //Variables nomralizadas con respecto al tiempo y velocidad de giro y avance
         float h = move_x * Time.deltaTime * turnSpeed;
         float v = move_z * Time.deltaTime * player_speed;
 
@@ -159,6 +160,12 @@ public class MovePlayer : MonoBehaviour
         {
             moving_Foward = true;
         }
+
+        if (move_x < 0 || move_x > 0)
+        {
+            left_turn = true;
+        }
+        else left_turn = false;
 
         Vector3 move = new Vector3(0, 0, v);
         move = transform.TransformDirection(move);
@@ -186,7 +193,7 @@ public class MovePlayer : MonoBehaviour
         else player_speed = 2.5f;
 
         //Estado de agacharse 
-        if (Input.GetKey(KeyCode.Joystick1Button2))
+        if (Input.GetKey(KeyCode.Joystick1Button2) || Input.GetKey(KeyCode.Space))
         {
             player_speed = 1f;
             isRunning = false;
@@ -195,7 +202,7 @@ public class MovePlayer : MonoBehaviour
         else isSneakIdle = false;
 
         //Estado de correr
-        if (Input.GetKey(KeyCode.Joystick1Button0) && !isSneakIdle)
+        if (Input.GetKey(KeyCode.Joystick1Button0) || Input.GetKey(KeyCode.LeftShift) && !isSneakIdle)
         {
             player_speed = 5f;
             isRunning = true;
