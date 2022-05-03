@@ -13,7 +13,7 @@ public class GuiControl : MonoBehaviour
     PlayerMain actual_Equip;
 
     //Para activar el menu de equipo 
-    public GameObject equip_Menu;
+    public GameObject equip_Menu, invent_Menu, file_Menu;
     public bool inMenu;
 
 
@@ -27,23 +27,17 @@ public class GuiControl : MonoBehaviour
     {
 
         //Abrir menú de equipo
-        if (!inMenu)
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                inMenu = true;
-                equip_Menu.SetActive(true);
-                status.SetActive(true);
-            }
+            EquipMenu();
         }
-        else
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                inMenu = false;
-                equip_Menu.SetActive(false);
-                status.SetActive(false);
-            }
+           InventMenu();
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            FileMenu();
         }
     }
 
@@ -68,6 +62,99 @@ public class GuiControl : MonoBehaviour
     public void EnableStatus()
     {
         StartCoroutine(ActiveStatus());
+    }
+
+    public void EquipMenu()
+    {
+        if (!inMenu)
+        {
+            inMenu = true;
+            equip_Menu.tag = "ActiveMenu";
+            equip_Menu.SetActive(true);
+            status.SetActive(true);
+        }
+        else
+        {
+            if(equip_Menu.tag != "ActiveMenu")
+            {
+                invent_Menu.SetActive(false);
+                invent_Menu.tag = "InactiveMenu";
+                file_Menu.SetActive(false);
+                file_Menu.tag = "InactiveMenu";
+                equip_Menu.SetActive(true);
+                equip_Menu.tag = "ActiveMenu";
+            } 
+            
+            else if (equip_Menu.tag == "ActiveMenu")
+            {
+                inMenu = false;
+                equip_Menu.tag = "InactiveMenu";
+                equip_Menu.SetActive(false);
+                status.SetActive(false);
+            }
+        }
+    }
+
+    public void InventMenu()
+    {
+        if (!inMenu)
+        {
+            inMenu = true;
+            invent_Menu.tag = "ActiveMenu";
+            invent_Menu.SetActive(true);
+            status.SetActive(true);
+        }
+        else
+        {
+            if (invent_Menu.tag != "ActiveMenu")
+            {
+                equip_Menu.SetActive(false);
+                equip_Menu.tag = "InactiveMenu";
+                file_Menu.SetActive(false);
+                file_Menu.tag = "InactiveMenu";
+                invent_Menu.SetActive(true);
+                invent_Menu.tag = "ActiveMenu";
+            }
+
+            else if (invent_Menu.tag == "ActiveMenu")
+            {
+                inMenu = false;
+                invent_Menu.tag = "InactiveMenu";
+                invent_Menu.SetActive(false);
+                status.SetActive(false);
+            }
+        }
+    }
+
+    public void FileMenu()
+    {
+        if (!inMenu)
+        {
+            inMenu = true;
+            file_Menu.tag = "ActiveMenu";
+            file_Menu.SetActive(true);
+            status.SetActive(true);
+        }
+        else
+        {
+            if (file_Menu.tag != "ActiveMenu")
+            {
+                invent_Menu.SetActive(false);
+                invent_Menu.tag = "InactiveMenu";
+                equip_Menu.SetActive(false);
+                equip_Menu.tag = "InactiveMenu";
+                file_Menu.SetActive(true);
+                file_Menu.tag = "ActiveMenu";
+            }
+
+            else if (file_Menu.tag == "ActiveMenu")
+            {
+                inMenu = false;
+                file_Menu.tag = "InactiveMenu";
+                file_Menu.SetActive(false);
+                status.SetActive(false);
+            }
+        }
     }
 
 }

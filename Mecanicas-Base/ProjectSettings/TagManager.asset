@@ -9,6 +9,8 @@ TagManager:
   - EquipA
   - EquipB
   - Unequip
+  - ActiveMenu
+  - InactiveMenu
   layers:
   - Default
   - TransparentFX

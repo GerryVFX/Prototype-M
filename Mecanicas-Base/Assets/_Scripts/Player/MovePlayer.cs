@@ -86,8 +86,12 @@ public class MovePlayer : MonoBehaviour
         player_direction = new Vector3(move_x, 0, move_z);
         player_direction = Vector3.ClampMagnitude(player_direction, 1);
 
-        CamDirection();
+        if(move_x==0 && move_z == 0)
+        {
+            CamDirection();
+        }
         
+
         movePLayer = player_direction.x * camRight + player_direction.z * camFoward;
         movePLayer = movePLayer * player_speed;        
         player_controller.transform.LookAt(player_controller.transform.position + movePLayer);
@@ -202,7 +206,7 @@ public class MovePlayer : MonoBehaviour
         else isSneakIdle = false;
 
         //Estado de correr
-        if (Input.GetKey(KeyCode.Joystick1Button0) || Input.GetKey(KeyCode.LeftShift) && !isSneakIdle)
+        if (Input.GetKey(KeyCode.Joystick1Button0) || Input.GetKey(KeyCode.LeftShift) && !isSneakIdle && !moving_Backward)
         {
             player_speed = 5f;
             isRunning = true;
