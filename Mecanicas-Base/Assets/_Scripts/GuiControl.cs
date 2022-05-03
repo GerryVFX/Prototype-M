@@ -1,118 +1,73 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GuiControl : MonoBehaviour
 {
-    //Variables del menú de status
+    //Variables del menú de status en menú rápido
     public GameObject status;
     public GameObject selectA;
     public GameObject selectB;
-    [SerializeField]
-    public Image equip_1;
-    public Image equip_2;
-    public Sprite[] all_equip;
 
+    //Para activar erquipo en jugador
+    PlayerMain actual_Equip;
 
-    public bool equipA;
-    public bool equipB;
+    //Para activar el menu de equipo 
+    public GameObject equip_Menu;
+    public bool inMenu;
 
-    EquipManager n_equip_select;
-    
 
     void Start()
     {
-        n_equip_select = FindObjectOfType<EquipManager>();
+        //Conexión con el player
+        actual_Equip = FindObjectOfType<PlayerMain>();
     }
 
-    //Activa menú de status y cambia equipo
-    void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            
-            StartCoroutine(ActiveStatus());
-        }
 
-        
-        equip_1.sprite = all_equip[n_equip_select.n_equip];
-        equip_2.sprite = all_equip[n_equip_select.n_equip2];
+        //Abrir menú de equipo
+        if (!inMenu)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                inMenu = true;
+                equip_Menu.SetActive(true);
+                status.SetActive(true);
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                inMenu = false;
+                equip_Menu.SetActive(false);
+                status.SetActive(false);
+            }
+        }
     }
 
     //Activación del menu de status por tiempo y cambia equipo
-    IEnumerator ActiveStatus()
+    public IEnumerator ActiveStatus()
     {
-        SwitchEquip();
         status.SetActive(true);
         yield return new WaitForSeconds(2);
         status.SetActive(false);
     }
 
-    public void EquipAsignGunA()
+    //Cambiar marca de equipo selccionado
+    public void SelectorEquip()
     {
-        if (n_equip_select.equipment[0].tag != "EquipA")
-        {
-            GameObject lastEquipA = GameObject.FindGameObjectWithTag("EquipA");
-            lastEquipA.tag = "EquipB";
-            n_equip_select.equipment[0].tag = "EquipA";
-        }
-        
-        
-    }
-    public void EquipAsignGunB()
-    {
-        if (n_equip_select.equipment[0].tag != "EquipB")
-        {
-            GameObject lastEquipB = GameObject.FindGameObjectWithTag("EquipB");
-            lastEquipB.tag = "EquipA";
-            n_equip_select.equipment[0].tag = "EquipB";
-        }
-        
-
+        if (actual_Equip.equipA) selectB.SetActive(true);
+        else selectB.SetActive(false);
+        if (actual_Equip.equipB) selectA.SetActive(true);
+        else selectA.SetActive(false);
     }
 
-    public void EquipAsignFlashA()
+    //Metodo para activar brevemente el menú rápido
+    public void EnableStatus()
     {
-        if (n_equip_select.equipment[1].tag != "EquipA")
-        {
-            GameObject lastEquipA = GameObject.FindGameObjectWithTag("EquipA");
-            lastEquipA.tag = "EquipB";
-            n_equip_select.equipment[1].tag = "EquipA";
-        }
-        
-
-    }
-    public void EquipAsignFlashB()
-    {
-        if (n_equip_select.equipment[1].tag != "EquipB")
-        {
-            GameObject lastEquipB = GameObject.FindGameObjectWithTag("EquipB");
-            lastEquipB.tag = "EquipA";
-            n_equip_select.equipment[1].tag = "EquipB";
-        }
-        
-
+        StartCoroutine(ActiveStatus());
     }
 
-    //Metodo para cambiar equipo
-    void SwitchEquip()
-    {
-        if (equipA)
-        {
-            equipB = true;
-            selectA.SetActive(false);
-            equipA = false;
-            selectB.SetActive(true);
-        }
-        else if (equipB)
-        {
-            equipA = true;
-            selectB.SetActive(false);
-            equipB = false;
-            selectA.SetActive(true);
-        }
-    }
-
-    
 }

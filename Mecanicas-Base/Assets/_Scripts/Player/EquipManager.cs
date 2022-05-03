@@ -1,117 +1,126 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EquipManager : MonoBehaviour
 {
-    //Variable para almacenar los equipos
-    public int n_equip;
-    public int n_equip2;
-    public GameObject gun;
-    public GameObject flashlight;
-    public GuiControl statusMenu;
-    public GameObject[] equipment;
+    //Para casignar a menú rápido
+    public string equipA;
+    public string equipB;
+    public string lastequip;
 
-    //Selector de equipo activo
-    GuiControl equipSelection;
-    
-    
-    void Start()
+    //Para realizar el cambio de imagenes en el menú rápido
+    public Image equip1;
+    public Image equip2;
+
+    public Sprite[] equipIMG;
+
+    //Control de balas y su visualización en menú rápido
+    public GameObject[] bullets;
+
+    //Menú ráido vacio
+    private void Start()
     {
-        //Declarar al selector de equipo
-        equipSelection = FindObjectOfType<GuiControl>();
-        
+        lastequip = "Empty";
+        equipA = "Empty";
+        equipB = "Empty";
     }
 
-    
-    void Update()
+    //Revisión de imagenes asignadas a menú rápido
+    private void Update()
     {
-        //Detectar la activación del equipo
-        Equip();
+        ImageEquipAsign();
+    }
+    
+    //Asignación de equipo a menú ráido
+    //Para pistola
+    public void EquipGuninA()
+    {
+        if (equipB == "GUN")
+        {
+            //Para evitar ducplicidad
+            lastequip = equipA;
+            equipB = lastequip;
+            bullets[1].SetActive(false);
+        }
+        equipA = "GUN";
+        bullets[0].SetActive(true); 
+    }
+    public void EquipGuninB()
+    {
+        if (equipA == "GUN")
+        {
+            lastequip = equipB;
+            equipA = lastequip;
+            bullets[0].SetActive(false);
+        }
+        equipB = "GUN";
+        bullets[1].SetActive(true);    
     }
 
-    //Activar y desactivar equipo según su slección
-    void Equip()
+    //Para linterna
+    public void EquipFlashinA()
     {
-        //Para pistola
-        if (equipment[0].tag == "EquipA")
+        if (equipB == "FLASH")
         {
-            n_equip = 0;
-            if (equipSelection.equipA)
-            {
-
-                equipment[0].SetActive(true);
-            }
-            else
-            {
-
-                equipment[0].SetActive(false);
-            }
+            lastequip = equipA;
+            equipB = lastequip;
+            if (lastequip == "GUN") bullets[1].SetActive(true);
         }
-        
-
-        if (equipment[0].tag == "EquipB")
+        equipA = "FLASH";
+        bullets[0].SetActive(false);
+    }
+    public void EquipFlashinB()
+    {
+        if (equipA == "FLASH")
         {
-            n_equip2 = 0;
-            if (equipSelection.equipB)
-            {
-
-                equipment[0].SetActive(true);
-            }
-            else
-            {
-
-                equipment[0].SetActive(false);
-            }
-
+            lastequip = equipB;
+            equipA = lastequip;
+            if (lastequip == "GUN") bullets[0].SetActive(true);
         }
-        
+        equipB = "FLASH";
+        bullets[1].SetActive(false);
+    }
 
-        //Para linterna
-        if (equipment[1].tag == "EquipA")
+    //Para cuchillo
+    public void EquipKnifeinA()
+    {
+        if (equipB == "KNIFE")
         {
-            n_equip = 1;
-            if (equipSelection.equipA)
-            {
-
-                equipment[1].SetActive(true);
-            }
-            else equipment[1].SetActive(false);
+            lastequip = equipA;
+            equipB = lastequip;
+            if (lastequip == "GUN") bullets[1].SetActive(true);
         }
-        
-
-        if (equipment[1].tag == "EquipB")
+        equipA = "KNIFE";
+        bullets[0].SetActive(false);
+    }
+    public void EquipKnifeinB()
+    {
+        if (equipA == "KNIFE")
         {
-            n_equip2 = 1;
-            if (equipSelection.equipB)
-            {
-
-                equipment[1].SetActive(true);
-            }
-            else equipment[1].SetActive(false);
+            lastequip = equipB;
+            equipA = lastequip;
+            if (lastequip == "GUN") bullets[0].SetActive(true);
+            
         }
+        equipB = "KNIFE";
+        bullets[1].SetActive(false);
+    }
 
-        if (equipment[2].tag == "EquipA")
-        {
-            n_equip = 2;
-            if (equipSelection.equipA)
-            {
+    //Relación equipo en menú ráido e imagens de referencia
+    void ImageEquipAsign()
+    {
+        //Para el quipo A
+        if (equipA == "Empty") equip1.sprite = equipIMG[0];
+        if (equipA == "GUN") equip1.sprite = equipIMG[1];
+        if (equipA == "FLASH") equip1.sprite = equipIMG[2];
+        if (equipA == "KNIFE") equip1.sprite = equipIMG[3];
+        //Para el qeuipo B
+        if (equipB == "Empty") equip2.sprite = equipIMG[0];
+        if (equipB == "GUN") equip2.sprite = equipIMG[1];
+        if (equipB == "FLASH") equip2.sprite = equipIMG[2];
+        if (equipB == "KNIFE") equip2.sprite = equipIMG[3];
 
-                equipment[2].SetActive(true);
-            }
-            else equipment[2].SetActive(false);
-        }
-
-
-        if (equipment[2].tag == "EquipB")
-        {
-            n_equip2 = 2;
-            if (equipSelection.equipB)
-            {
-
-                equipment[2].SetActive(true);
-            }
-            else equipment[2].SetActive(false);
-        }
     }
 }
