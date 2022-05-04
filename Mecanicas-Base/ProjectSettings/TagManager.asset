@@ -12,6 +12,8 @@ TagManager:
   - ActiveMenu
   - InactiveMenu
   - Bullets
+  - knife
+  - gun
   layers:
   - Default
   - TransparentFX

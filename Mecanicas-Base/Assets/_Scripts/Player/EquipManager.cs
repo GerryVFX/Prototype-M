@@ -6,9 +6,8 @@ using TMPro;
 public class EquipManager : MonoBehaviour
 {
     //Gestion de equipo
-    public bool gun, flash, knife, shootgun, rifle, axe, hardgun;
+    public bool gun, bullets_gun, flash, knife, shootgun, rifle, axe, hardgun;
     public GameObject[] wepons_Panels;
-    public GameObject[] tags_Equip;
 
     //Para asignar a menú rápido
     public string equipA;
@@ -24,7 +23,8 @@ public class EquipManager : MonoBehaviour
     //Control de balas y su visualización en menú rápido
     public GameObject[] bullets_Cases;
     public int bullets_length;
-    public TMP_Text bullets;
+    public int bulles_reserv;
+    public TMP_Text[] bullets;
 
     //Menú ráido vacio
     private void Start()
@@ -42,17 +42,22 @@ public class EquipManager : MonoBehaviour
     //Revisión de imagenes asignadas a menú rápido
     private void Update()
     {
-        if (bullets.tag == "Bullets")
-        {
-            bullets.text = bullets_length.ToString();
-        }
         
+        bullets[0].text = "x " + bullets_length.ToString();
+        bullets[1].text = "x " + bullets_length.ToString();
+        bullets[2].text = "x " + bullets_length.ToString();
+        
+        EquipManagment();
         ImageEquipAsign();    
     }
 
     public void EquipManagment()
     {
-
+        if (knife)
+        {
+            wepons_Panels[0].SetActive(true);
+        }
+        else wepons_Panels[0].SetActive(false);
     }
     
     //Asignación de equipo a menú ráido

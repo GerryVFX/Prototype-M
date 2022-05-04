@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GuiControl : MonoBehaviour
 {
+    SoundsSystem  menu_Sounds;
+
     //Variables del menú de status en menú rápido
     public GameObject status;
     public GameObject selectA;
@@ -13,14 +15,18 @@ public class GuiControl : MonoBehaviour
     PlayerMain actual_Equip;
 
     //Para activar el menu de equipo 
+    public GameObject[] equip_Actions;
     public GameObject equip_Menu, invent_Menu, file_Menu;
     public bool inMenu;
+
+
 
 
     void Start()
     {
         //Conexión con el player
         actual_Equip = FindObjectOfType<PlayerMain>();
+        menu_Sounds = FindObjectOfType<SoundsSystem>();
     }
 
     private void Update()
@@ -29,14 +35,17 @@ public class GuiControl : MonoBehaviour
         //Abrir menú de equipo
         if (Input.GetKeyDown(KeyCode.E))
         {
+            menu_Sounds.SoundMenu();
             EquipMenu();
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-           InventMenu();
+            menu_Sounds.SoundMenu();
+            InventMenu();
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
+            menu_Sounds.SoundMenu();
             FileMenu();
         }
     }
@@ -157,4 +166,29 @@ public class GuiControl : MonoBehaviour
         }
     }
 
+
+    public void ActionsGun()
+    {        
+            equip_Actions[0].SetActive(true);   
+    }
+    public void DesactiveActionGun()
+    {       
+            equip_Actions[0].SetActive(false);   
+    }
+    public void ActionsFlash()
+    {
+        equip_Actions[1].SetActive(true);
+    }
+    public void DesactiveActionFlash()
+    {
+        equip_Actions[1].SetActive(false);
+    }
+    public void ActionsKnife()
+    {
+        equip_Actions[2].SetActive(true);
+    }
+    public void DesactiveActionKnife()
+    {
+        equip_Actions[2].SetActive(false);
+    }
 }
