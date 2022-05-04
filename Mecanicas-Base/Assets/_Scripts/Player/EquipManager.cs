@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class EquipManager : MonoBehaviour
 {
-    //Para casignar a menú rápido
+    //Gestion de equipo
+    public bool gun, flash, knife, shootgun, rifle, axe, hardgun;
+    public GameObject[] wepons_Panels;
+    public GameObject[] tags_Equip;
+
+    //Para asignar a menú rápido
     public string equipA;
     public string equipB;
     public string lastequip;
@@ -17,7 +22,9 @@ public class EquipManager : MonoBehaviour
     public Sprite[] equipIMG;
 
     //Control de balas y su visualización en menú rápido
-    public GameObject[] bullets;
+    public GameObject[] bullets_Cases;
+    public int bullets_length;
+    public TMP_Text bullets;
 
     //Menú ráido vacio
     private void Start()
@@ -25,12 +32,27 @@ public class EquipManager : MonoBehaviour
         lastequip = "Empty";
         equipA = "Empty";
         equipB = "Empty";
+        bullets_length = 0;
     }
 
+    //Gestión de recursos
+    
+   
+    
     //Revisión de imagenes asignadas a menú rápido
     private void Update()
     {
-        ImageEquipAsign();
+        if (bullets.tag == "Bullets")
+        {
+            bullets.text = bullets_length.ToString();
+        }
+        
+        ImageEquipAsign();    
+    }
+
+    public void EquipManagment()
+    {
+
     }
     
     //Asignación de equipo a menú ráido
@@ -42,10 +64,10 @@ public class EquipManager : MonoBehaviour
             //Para evitar ducplicidad
             lastequip = equipA;
             equipB = lastequip;
-            bullets[1].SetActive(false);
+            bullets_Cases[1].SetActive(false);
         }
         equipA = "GUN";
-        bullets[0].SetActive(true); 
+        bullets_Cases[0].SetActive(true); 
     }
     public void EquipGuninB()
     {
@@ -53,10 +75,10 @@ public class EquipManager : MonoBehaviour
         {
             lastequip = equipB;
             equipA = lastequip;
-            bullets[0].SetActive(false);
+            bullets_Cases[0].SetActive(false);
         }
         equipB = "GUN";
-        bullets[1].SetActive(true);    
+        bullets_Cases[1].SetActive(true);    
     }
 
     //Para linterna
@@ -66,10 +88,10 @@ public class EquipManager : MonoBehaviour
         {
             lastequip = equipA;
             equipB = lastequip;
-            if (lastequip == "GUN") bullets[1].SetActive(true);
+            if (lastequip == "GUN") bullets_Cases[1].SetActive(true);
         }
         equipA = "FLASH";
-        bullets[0].SetActive(false);
+        bullets_Cases[0].SetActive(false);
     }
     public void EquipFlashinB()
     {
@@ -77,10 +99,10 @@ public class EquipManager : MonoBehaviour
         {
             lastequip = equipB;
             equipA = lastequip;
-            if (lastequip == "GUN") bullets[0].SetActive(true);
+            if (lastequip == "GUN") bullets_Cases[0].SetActive(true);
         }
         equipB = "FLASH";
-        bullets[1].SetActive(false);
+        bullets_Cases[1].SetActive(false);
     }
 
     //Para cuchillo
@@ -90,10 +112,10 @@ public class EquipManager : MonoBehaviour
         {
             lastequip = equipA;
             equipB = lastequip;
-            if (lastequip == "GUN") bullets[1].SetActive(true);
+            if (lastequip == "GUN") bullets_Cases[1].SetActive(true);
         }
         equipA = "KNIFE";
-        bullets[0].SetActive(false);
+        bullets_Cases[0].SetActive(false);
     }
     public void EquipKnifeinB()
     {
@@ -101,11 +123,11 @@ public class EquipManager : MonoBehaviour
         {
             lastequip = equipB;
             equipA = lastequip;
-            if (lastequip == "GUN") bullets[0].SetActive(true);
+            if (lastequip == "GUN") bullets_Cases[0].SetActive(true);
             
         }
         equipB = "KNIFE";
-        bullets[1].SetActive(false);
+        bullets_Cases[1].SetActive(false);
     }
 
     //Relación equipo en menú ráido e imagens de referencia
