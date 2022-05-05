@@ -17,6 +17,8 @@ public class PlayerMain : MonoBehaviour
     public Sprite[] lifeStatus;
     public bool medical_UsefullA;
     public bool medical_UsefullB;
+    public bool canReloadA;
+    public bool canReloadB;
 
     //Equipo del jugador
     public bool equipA;
@@ -78,6 +80,15 @@ public class PlayerMain : MonoBehaviour
            
         }
 
+        //Recargar pistola
+        if (canReloadA || canReloadB)
+        {
+            if (Input.GetKey(KeyCode.R))
+            {
+                Reload();
+            }
+        }
+
         //Estado de salud
         switch (life)
         {
@@ -101,7 +112,12 @@ public class PlayerMain : MonoBehaviour
     {
         if (equipA)
         {
-            if (myEquip.equipA == "GUN") all_Equip[0].SetActive(true);
+            if (myEquip.equipA == "GUN")
+            {
+                all_Equip[0].SetActive(true);
+                canReloadA = true;
+                
+            }              
             else all_Equip[0].SetActive(false);
             if (myEquip.equipA == "FLASH") all_Equip[1].SetActive(true);
             else all_Equip[1].SetActive(false);
@@ -109,19 +125,43 @@ public class PlayerMain : MonoBehaviour
             else all_Equip[2].SetActive(false);
             if (myEquip.equipA == "MEDICAL") medical_UsefullA = true;
             medical_UsefullB = false;
-            
+            canReloadB = false;
+
         }
 
         if (equipB)
         {
-            if (myEquip.equipB == "GUN") all_Equip[0].SetActive(true);
+            if (myEquip.equipB == "GUN")
+            {
+                all_Equip[0].SetActive(true);
+                canReloadB = true;
+                
+            }               
             else all_Equip[0].SetActive(false);
-            if (myEquip.equipB == "FLASH") all_Equip[1].SetActive(true);
+            if (myEquip.equipB == "FLASH")
+            {
+                all_Equip[1].SetActive(true);
+                medical_UsefullA = false;
+                canReloadA = false;
+            }
+                
             else all_Equip[1].SetActive(false);
-            if (myEquip.equipB == "KNIFE") all_Equip[2].SetActive(true);
+            if (myEquip.equipB == "KNIFE")
+            {
+                all_Equip[2].SetActive(true);
+                medical_UsefullA = false;
+                canReloadA = false;
+            }
+                
             else all_Equip[2].SetActive(false);
-            if (myEquip.equipB == "MEDICAL") medical_UsefullB = true;
+            if (myEquip.equipB == "MEDICAL")
+            {
+                medical_UsefullB = true;
+                canReloadA = false;
+            }
+                
             medical_UsefullA = false;
+            canReloadA = false;
         }
     }
 
@@ -165,13 +205,13 @@ public class PlayerMain : MonoBehaviour
 
     public void Reload()
     {
-        if (myEquip.bullets_length < 15)
+        if (myEquip.bullets_reserv > 0)
         {
-            for(int i = 0; myEquip.bullets_length != 15; myEquip.bullets_length++, i++)
-            {
-                myEquip.bullets_reserv -= i;
-                
-            }
+            my_sounds.Reload();
+            int maxReload = 15;
+            maxReload -= myEquip.bullets_length;
+            myEquip.bullets_length += maxReload;
+            myEquip.bullets_reserv -= maxReload;
         }
     }
 }

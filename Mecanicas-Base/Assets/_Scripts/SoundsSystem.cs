@@ -36,4 +36,10 @@ public class SoundsSystem : MonoBehaviour
         my_Source.Play();
     }
 
+    public void Reload()
+    {
+        my_Source.clip = my_Clips[4];
+        my_Source.Play();
+    }
+
 }

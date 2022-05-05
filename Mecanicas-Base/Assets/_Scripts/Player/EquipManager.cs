@@ -31,9 +31,11 @@ public class EquipManager : MonoBehaviour
     public int medical_reserv = 0;
     public TMP_Text medical_Cases;
 
+    PlayerMain equi_player;
     //Menú ráido vacio
     private void Start()
     {
+        equi_player = FindObjectOfType<PlayerMain>();
         lastequip = "Empty";
         equipA = "Empty";
         equipB = "Empty";
@@ -105,6 +107,7 @@ public class EquipManager : MonoBehaviour
             if (lastequip == "GUN") bullets_Cases[1].SetActive(true);
         }
         equipA = "FLASH";
+        equi_player.canReloadA = false;
         bullets_Cases[0].SetActive(false);
     }
     public void EquipFlashinB()
@@ -116,6 +119,7 @@ public class EquipManager : MonoBehaviour
             if (lastequip == "GUN") bullets_Cases[0].SetActive(true);
         }
         equipB = "FLASH";
+        equi_player.canReloadB = false;
         bullets_Cases[1].SetActive(false);
     }
 
@@ -129,6 +133,7 @@ public class EquipManager : MonoBehaviour
             if (lastequip == "GUN") bullets_Cases[1].SetActive(true);
         }
         equipA = "KNIFE";
+        equi_player.canReloadA = false;
         bullets_Cases[0].SetActive(false);
     }
     public void EquipKnifeinB()
@@ -141,6 +146,7 @@ public class EquipManager : MonoBehaviour
             
         }
         equipB = "KNIFE";
+        equi_player.canReloadB = false;
         bullets_Cases[1].SetActive(false);
     }
 
@@ -155,6 +161,7 @@ public class EquipManager : MonoBehaviour
                 if (lastequip == "GUN") bullets_Cases[1].SetActive(true);
             }
             equipA = "MEDICAL";
+            equi_player.canReloadA = false;
             bullets_Cases[0].SetActive(false);
         }
         else if (equipA == "MEDICAL" && medical_reserv <= 0) equipA = "Empty";
@@ -172,6 +179,7 @@ public class EquipManager : MonoBehaviour
 
             }
             equipB = "MEDICAL";
+            equi_player.canReloadB = false;
             bullets_Cases[1].SetActive(false);
         }
         else if (equipB == "MEDICAL" && medical_reserv <= 0) equipB = "Empty";

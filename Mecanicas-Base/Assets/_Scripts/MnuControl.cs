@@ -11,6 +11,7 @@ public class MnuControl : MonoBehaviour
     public GameObject pantalla_Titulo;
     public GameObject menu_Titulo;
     public GameObject menu_opciones;
+    public GameObject message_HP;
 
     //Imagenes para fundido
     public Image Fades;
@@ -123,8 +124,9 @@ public class MnuControl : MonoBehaviour
     IEnumerator GotoTest()
     {
         Fades.enabled = true;
+        message_HP.SetActive(true);
         Fades.CrossFadeAlpha(1, 2f, false);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
         SceneManager.LoadScene(1);
     }
 }
