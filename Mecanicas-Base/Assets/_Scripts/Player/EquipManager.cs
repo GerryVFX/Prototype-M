@@ -6,7 +6,8 @@ using TMPro;
 public class EquipManager : MonoBehaviour
 {
     //Gestion de equipo
-    public bool gun, bullets_gun, flash, knife, shootgun, rifle, axe, hardgun;
+    public bool gun, bullets_gun, flash, knife, shootgun, rifle, axe, hardgun,
+                medical;
     public GameObject[] wepons_Panels;
 
     //Para asignar a menú rápido
@@ -23,8 +24,12 @@ public class EquipManager : MonoBehaviour
     //Control de balas y su visualización en menú rápido
     public GameObject[] bullets_Cases;
     public int bullets_length;
-    public int bulles_reserv;
+    public int bullets_reserv;
     public TMP_Text[] bullets;
+    public TMP_Text bullets_reservText;
+
+    public int medical_reserv = 0;
+    public TMP_Text medical_Cases;
 
     //Menú ráido vacio
     private void Start()
@@ -32,7 +37,7 @@ public class EquipManager : MonoBehaviour
         lastequip = "Empty";
         equipA = "Empty";
         equipB = "Empty";
-        bullets_length = 0;
+        bullets_length = 4;
     }
 
     //Gestión de recursos
@@ -46,6 +51,10 @@ public class EquipManager : MonoBehaviour
         bullets[0].text = "x " + bullets_length.ToString();
         bullets[1].text = "x " + bullets_length.ToString();
         bullets[2].text = "x " + bullets_length.ToString();
+
+        bullets_reservText.text = "x " + bullets_reserv.ToString();
+
+        medical_Cases.text = "x " + medical_reserv.ToString();
         
         EquipManagment();
         ImageEquipAsign();    
@@ -135,6 +144,40 @@ public class EquipManager : MonoBehaviour
         bullets_Cases[1].SetActive(false);
     }
 
+    public void EquipMedicalA()
+    {
+        if (medical_reserv > 0)
+        {
+            if (equipB == "MEDICAL" && medical_reserv > 0)
+            {
+                lastequip = equipA;
+                equipB = lastequip;
+                if (lastequip == "GUN") bullets_Cases[1].SetActive(true);
+            }
+            equipA = "MEDICAL";
+            bullets_Cases[0].SetActive(false);
+        }
+        else if (equipA == "MEDICAL" && medical_reserv <= 0) equipA = "Empty";
+
+    }
+    public void EquipMedicalB()
+    {
+        if (medical_reserv > 0)
+        {
+            if (equipA == "MEDICAL" && medical_reserv > 0)
+            {
+                lastequip = equipB;
+                equipA = lastequip;
+                if (lastequip == "GUN") bullets_Cases[0].SetActive(true);
+
+            }
+            equipB = "MEDICAL";
+            bullets_Cases[1].SetActive(false);
+        }
+        else if (equipB == "MEDICAL" && medical_reserv <= 0) equipB = "Empty";
+
+    }
+
     //Relación equipo en menú ráido e imagens de referencia
     void ImageEquipAsign()
     {
@@ -143,11 +186,13 @@ public class EquipManager : MonoBehaviour
         if (equipA == "GUN") equip1.sprite = equipIMG[1];
         if (equipA == "FLASH") equip1.sprite = equipIMG[2];
         if (equipA == "KNIFE") equip1.sprite = equipIMG[3];
+        if (equipA == "MEDICAL") equip1.sprite = equipIMG[4];
         //Para el qeuipo B
         if (equipB == "Empty") equip2.sprite = equipIMG[0];
         if (equipB == "GUN") equip2.sprite = equipIMG[1];
         if (equipB == "FLASH") equip2.sprite = equipIMG[2];
         if (equipB == "KNIFE") equip2.sprite = equipIMG[3];
+        if (equipB == "MEDICAL") equip2.sprite = equipIMG[4];
 
     }
 }

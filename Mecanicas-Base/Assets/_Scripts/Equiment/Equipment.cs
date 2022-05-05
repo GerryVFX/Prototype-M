@@ -26,9 +26,22 @@ public class Equipment : MonoBehaviour
             if (Input.GetKey(KeyCode.G))
             {
                 messages[0].SetActive(false);
+
                 if (this.gameObject.tag == "knife")
                 {
                     StartCoroutine(TakeEquipKnife());
+                }
+                else if (this.gameObject.tag == "medical")
+                {
+                    equipActive.medical = true;
+                    equipActive.medical_reserv += 1;
+                    Destroy(this.gameObject);
+                }
+                else if (this.gameObject.tag == "Bullets")
+                {
+                    equipActive.bullets_gun = true;
+                    equipActive.bullets_reserv += 15;
+                    Destroy(this.gameObject);
                 }
             }
         }      
@@ -51,5 +64,11 @@ public class Equipment : MonoBehaviour
         yield return new WaitForSeconds(5);
         messages[1].SetActive(false);
         Destroy(this.gameObject);
+    }
+    IEnumerator TakeMedical()
+    {
+       
+        yield return new WaitForSeconds(5);
+        
     }
 }

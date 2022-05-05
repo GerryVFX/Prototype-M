@@ -30,4 +30,10 @@ public class SoundsSystem : MonoBehaviour
         my_Source.Play();
     }
 
+    public void Heal()
+    {
+        my_Source.clip = my_Clips[3];
+        my_Source.Play();
+    }
+
 }

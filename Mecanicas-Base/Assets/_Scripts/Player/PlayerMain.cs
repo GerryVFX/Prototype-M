@@ -15,6 +15,8 @@ public class PlayerMain : MonoBehaviour
     float life = 3;
     public Image lifebar;
     public Sprite[] lifeStatus;
+    public bool medical_UsefullA;
+    public bool medical_UsefullB;
 
     //Equipo del jugador
     public bool equipA;
@@ -23,6 +25,8 @@ public class PlayerMain : MonoBehaviour
     GameObject[] all_Equip;
     EquipManager myEquip;
     GuiControl statusMenu;
+
+    SoundsSystem my_sounds;
    
 
 
@@ -31,6 +35,7 @@ public class PlayerMain : MonoBehaviour
         //Conexión con el inventario y menús
         myEquip = FindObjectOfType<EquipManager>();
         statusMenu = FindObjectOfType<GuiControl>();
+        my_sounds = FindObjectOfType<SoundsSystem>();
     }
 
     void Update()
@@ -58,6 +63,19 @@ public class PlayerMain : MonoBehaviour
         {
             statusMenu.SelectorEquip();
             SwitchEquip();
+        }
+
+        //Usar medicamento
+        if (myEquip.equipA == "MEDICAL" || myEquip.equipB == "MEDICAL")
+        {
+            if (medical_UsefullA||medical_UsefullB)
+            {
+                if (Input.GetKey(KeyCode.Q))
+                {
+                    UsingMedical();
+                }
+            }
+           
         }
 
         //Estado de salud
@@ -89,6 +107,9 @@ public class PlayerMain : MonoBehaviour
             else all_Equip[1].SetActive(false);
             if (myEquip.equipA == "KNIFE") all_Equip[2].SetActive(true);
             else all_Equip[2].SetActive(false);
+            if (myEquip.equipA == "MEDICAL") medical_UsefullA = true;
+            medical_UsefullB = false;
+            
         }
 
         if (equipB)
@@ -99,6 +120,8 @@ public class PlayerMain : MonoBehaviour
             else all_Equip[1].SetActive(false);
             if (myEquip.equipB == "KNIFE") all_Equip[2].SetActive(true);
             else all_Equip[2].SetActive(false);
+            if (myEquip.equipB == "MEDICAL") medical_UsefullB = true;
+            medical_UsefullA = false;
         }
     }
 
@@ -114,6 +137,41 @@ public class PlayerMain : MonoBehaviour
         {
             equipB = false;
             equipA = true;
+        }
+    }
+
+    public void UsingMedical()
+    {
+        if (myEquip.medical_reserv > 0)
+        {
+            my_sounds.Heal();
+            life += 3;
+            myEquip.medical_reserv -= 1;
+
+            if (myEquip.equipA == "MEDICAL" && myEquip.medical_reserv == 0)
+            {
+                myEquip.equipA = "Empty";
+            }
+            if (myEquip.equipB == "MEDICAL" && myEquip.medical_reserv == 0)
+            {
+                myEquip.equipB = "Empty";
+            }
+            if (life > 3)
+            {
+                life = 3;
+            }
+        }
+    }
+
+    public void Reload()
+    {
+        if (myEquip.bullets_length < 15)
+        {
+            for(int i = 0; myEquip.bullets_length != 15; myEquip.bullets_length++, i++)
+            {
+                myEquip.bullets_reserv -= i;
+                
+            }
         }
     }
 }
