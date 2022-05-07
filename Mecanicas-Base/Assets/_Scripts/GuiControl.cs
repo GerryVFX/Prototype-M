@@ -19,7 +19,9 @@ public class GuiControl : MonoBehaviour
     public GameObject equip_Menu, invent_Menu, file_Menu;
     public bool inMenu;
 
-
+    TextStory desactiveText;
+    public Camera camera_Map_Zoom;
+    public bool inZoom;
 
 
     void Start()
@@ -27,6 +29,8 @@ public class GuiControl : MonoBehaviour
         //Conexión con el player
         actual_Equip = FindObjectOfType<PlayerMain>();
         menu_Sounds = FindObjectOfType<SoundsSystem>();
+
+        desactiveText = FindObjectOfType<TextStory>();
     }
 
     private void Update()
@@ -55,7 +59,11 @@ public class GuiControl : MonoBehaviour
     {
         status.SetActive(true);
         yield return new WaitForSeconds(2);
-        status.SetActive(false);
+        if (!inMenu)
+        {
+            status.SetActive(false);
+        }
+       
     }
 
     //Cambiar marca de equipo selccionado
@@ -80,6 +88,7 @@ public class GuiControl : MonoBehaviour
             inMenu = true;
             equip_Menu.tag = "ActiveMenu";
             equip_Menu.SetActive(true);
+            
             status.SetActive(true);
         }
         else
@@ -88,7 +97,9 @@ public class GuiControl : MonoBehaviour
             {
                 invent_Menu.SetActive(false);
                 invent_Menu.tag = "InactiveMenu";
+                desactiveText.DesactivePanels();
                 file_Menu.SetActive(false);
+                
                 file_Menu.tag = "InactiveMenu";
                 equip_Menu.SetActive(true);
                 equip_Menu.tag = "ActiveMenu";
@@ -99,6 +110,7 @@ public class GuiControl : MonoBehaviour
                 inMenu = false;
                 equip_Menu.tag = "InactiveMenu";
                 equip_Menu.SetActive(false);
+                
                 status.SetActive(false);
             }
         }
@@ -111,6 +123,7 @@ public class GuiControl : MonoBehaviour
             inMenu = true;
             invent_Menu.tag = "ActiveMenu";
             invent_Menu.SetActive(true);
+            
             status.SetActive(true);
         }
         else
@@ -119,7 +132,9 @@ public class GuiControl : MonoBehaviour
             {
                 equip_Menu.SetActive(false);
                 equip_Menu.tag = "InactiveMenu";
+                desactiveText.DesactivePanels();
                 file_Menu.SetActive(false);
+                
                 file_Menu.tag = "InactiveMenu";
                 invent_Menu.SetActive(true);
                 invent_Menu.tag = "ActiveMenu";
@@ -130,6 +145,7 @@ public class GuiControl : MonoBehaviour
                 inMenu = false;
                 invent_Menu.tag = "InactiveMenu";
                 invent_Menu.SetActive(false);
+                
                 status.SetActive(false);
             }
         }
@@ -142,7 +158,9 @@ public class GuiControl : MonoBehaviour
             inMenu = true;
             file_Menu.tag = "ActiveMenu";
             file_Menu.SetActive(true);
+            
             status.SetActive(true);
+            
         }
         else
         {
@@ -154,13 +172,16 @@ public class GuiControl : MonoBehaviour
                 equip_Menu.tag = "InactiveMenu";
                 file_Menu.SetActive(true);
                 file_Menu.tag = "ActiveMenu";
+               
             }
 
             else if (file_Menu.tag == "ActiveMenu")
             {
                 inMenu = false;
                 file_Menu.tag = "InactiveMenu";
+                desactiveText.DesactivePanels();
                 file_Menu.SetActive(false);
+                
                 status.SetActive(false);
             }
         }
@@ -191,4 +212,24 @@ public class GuiControl : MonoBehaviour
     {
         equip_Actions[2].SetActive(false);
     }
+
+
+    public void ZommCameraIn()
+    {
+
+        if (camera_Map_Zoom.orthographicSize >= 14)
+        {
+            inZoom = true;
+            camera_Map_Zoom.orthographicSize = 6;
+        }
+
+        else
+        {
+            inZoom = false;
+            camera_Map_Zoom.orthographicSize = 14;
+        } 
+            
+    }
+
+   
 }
