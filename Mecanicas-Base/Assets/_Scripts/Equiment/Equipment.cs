@@ -43,6 +43,7 @@ public class Equipment : MonoBehaviour
                     equipActive.bullets_reserv += 15;
                     Destroy(this.gameObject);
                 }
+                
             }
         }      
     }
@@ -65,10 +66,5 @@ public class Equipment : MonoBehaviour
         messages[1].SetActive(false);
         Destroy(this.gameObject);
     }
-    IEnumerator TakeMedical()
-    {
-       
-        yield return new WaitForSeconds(5);
-        
-    }
+   
 }
