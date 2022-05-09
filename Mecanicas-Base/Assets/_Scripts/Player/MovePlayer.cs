@@ -31,7 +31,7 @@ public class MovePlayer : MonoBehaviour
 
     //Variables para velocidad y gravedad
     [SerializeField]
-    float player_speed;
+    public float player_speed;
     float gravity = 500f;
 
     //Declaración de variables

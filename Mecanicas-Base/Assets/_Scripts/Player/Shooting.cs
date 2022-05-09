@@ -4,13 +4,24 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
-    // Start is called before the first frame update
+    //Variables para interactuar con el enemigo
+    GameObject zombiReaction;
+    Enemi_01 zombi;
+
+
+    //Variables para enlazar con el player
+    PlayerMain playerAim;
+    EquipManager bullets;
+    
     void Start()
     {
-        
+        zombi = FindObjectOfType<Enemi_01>();
+        playerAim = FindObjectOfType<PlayerMain>();
+        bullets = GetComponent<EquipManager>();
+        zombiReaction = GameObject.FindGameObjectWithTag("Enemy");
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -20,11 +31,20 @@ public class Shooting : MonoBehaviour
 
             if (Physics.Raycast(transform.position, rayPosition, out hit))
                 print("Found an object - distance: " + hit.transform.name);
-            if (hit.transform.name == "Zombi1"|| hit.transform.name == "Zombi2"|| hit.transform.name == "Zombi3")
+
+            if (hit.transform.gameObject.tag=="Enemy")
             {
-                Destroy(hit.transform.gameObject);
+                StartCoroutine(HitMark());
+                zombi.life -= 1;
             }
 
         }
+    }
+
+    IEnumerator HitMark()
+    {
+        zombiReaction.GetComponent<MeshRenderer>().material.color = Color.red;
+        yield return new WaitForSeconds(0.5f);
+        zombiReaction.GetComponent<MeshRenderer>().material.color = Color.white;
     }
 }

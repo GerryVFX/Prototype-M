@@ -51,15 +51,15 @@ public class PlayerMain : MonoBehaviour
 
         if (enemi)
         {
-            float dist = Vector3.Distance(enemi.position, transform.position);
-            if (dist <= 3)
-            {
-                if (Input.GetKeyDown(KeyCode.X))
-                {
-                    transform.LookAt(enemi.position);
-                }
-            }
-            else print("Out of Range");
+            //float dist = Vector3.Distance(enemi.position, transform.position);
+            //if (dist <= 3)
+            //{
+            //    if (Input.GetKeyDown(KeyCode.X))
+            //    {
+            //        transform.LookAt(enemi.position);
+            //    }
+            //}
+            //else print("Out of Range");
         }
 
         //Acción de apuntado

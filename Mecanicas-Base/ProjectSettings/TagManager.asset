@@ -17,6 +17,7 @@ TagManager:
   - medical
   - ActivePanel
   - InactivePanel
+  - Enemy
   layers:
   - Default
   - TransparentFX
