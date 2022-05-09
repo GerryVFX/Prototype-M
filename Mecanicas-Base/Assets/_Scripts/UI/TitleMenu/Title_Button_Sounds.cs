@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Button_Sounds : MonoBehaviour
+public class Title_Button_Sounds : MonoBehaviour
 {
     //Variables AudiosSource y Array de clips
     public AudioSource button_sounds;

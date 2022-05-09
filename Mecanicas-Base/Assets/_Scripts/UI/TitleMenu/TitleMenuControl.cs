@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
-public class MnuControl : MonoBehaviour
+public class TitleMenuControl : MonoBehaviour
 {
     //Referencias de Canvas
     public GameObject pantalla_Titulo;

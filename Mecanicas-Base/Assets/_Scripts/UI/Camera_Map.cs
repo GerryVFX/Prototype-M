@@ -6,11 +6,11 @@ public class Camera_Map : MonoBehaviour
 {
     public Transform player;
     Vector3 camPosition;
-    GuiControl zoomDetection;
+    GUIControl zoomDetection;
 
     private void Start()
     {
-        zoomDetection = FindObjectOfType<GuiControl>();
+        zoomDetection = FindObjectOfType<GUIControl>();
         camPosition = transform.position;
         
     }

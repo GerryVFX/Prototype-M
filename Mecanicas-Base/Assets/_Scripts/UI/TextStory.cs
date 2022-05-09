@@ -10,10 +10,10 @@ public class TextStory : MonoBehaviour
     public TMP_Text content_Text;
     public TMP_Text[] text_Story;
 
-    GuiControl close_Menu;
+    GUIControl close_Menu;
     private void Start()
     {
-        close_Menu = FindObjectOfType<GuiControl>();
+        close_Menu = FindObjectOfType<GUIControl>();
     }
 
     //private void Update()

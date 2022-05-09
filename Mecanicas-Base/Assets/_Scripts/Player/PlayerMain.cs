@@ -26,7 +26,7 @@ public class PlayerMain : MonoBehaviour
     [SerializeField]
     GameObject[] all_Equip;
     EquipManager myEquip;
-    GuiControl statusMenu;
+    GUIControl statusMenu;
 
     SoundsSystem my_sounds;
 
@@ -38,7 +38,7 @@ public class PlayerMain : MonoBehaviour
     {
         //Conexión con el inventario y menús
         myEquip = FindObjectOfType<EquipManager>();
-        statusMenu = FindObjectOfType<GuiControl>();
+        statusMenu = FindObjectOfType<GUIControl>();
         my_sounds = FindObjectOfType<SoundsSystem>();
         enemi = GameObject.Find("Zombi1").GetComponent<Transform>();
 
