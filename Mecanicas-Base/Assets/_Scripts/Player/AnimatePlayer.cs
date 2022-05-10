@@ -12,7 +12,7 @@ public class AnimatePlayer : MonoBehaviour
     MovePlayer player_States;
 
     //Variable para el control de animaciones
-    Animator animPlayer;
+    public Animator animPlayer;
 
     //Declaración de variables
     void Start()
@@ -72,13 +72,6 @@ public class AnimatePlayer : MonoBehaviour
             animPlayer.SetBool("IsAim", true);
         }
         else animPlayer.SetBool("IsAim", false);
-        if (mainPlayer.isAim)
-        {
-            //Para disparar
-            if (Input.GetKey(KeyCode.Joystick1Button0)||Input.GetButtonDown("Fire1"))
-            {
-                animPlayer.SetTrigger("IsShoot");
-            }
-        }
+       
     }
 }

@@ -6,45 +6,70 @@ public class Shooting : MonoBehaviour
 {
     //Variables para interactuar con el enemigo
     GameObject zombiReaction;
-    Enemi_01 zombi;
+    public int zombilife=8;
 
+    bool shooting;
+    public RaycastHit hit;
 
     //Variables para enlazar con el player
+    [SerializeField]
     PlayerMain playerAim;
+    [SerializeField]
     EquipManager bullets;
+    AnimatePlayer animShoot;
+    [SerializeField]
+    SoundsSystem shoot_Sounds;
+    public GameObject fire_Shoot;
+    public Transform fire_Spawn;
     
     void Start()
     {
-        zombi = FindObjectOfType<Enemi_01>();
         playerAim = FindObjectOfType<PlayerMain>();
-        bullets = GetComponent<EquipManager>();
+        bullets = FindObjectOfType<EquipManager>();
+        animShoot = FindObjectOfType<AnimatePlayer>();
+        shoot_Sounds = FindObjectOfType<SoundsSystem>();
         zombiReaction = GameObject.FindGameObjectWithTag("Enemy");
+
+        
     }
 
     
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (fire_Shoot != null)
         {
-            Vector3 rayPosition = transform.TransformDirection(Vector3.forward);
-            RaycastHit hit;
-
-            if (Physics.Raycast(transform.position, rayPosition, out hit))
-                print("Found an object - distance: " + hit.transform.name);
-
-            if (hit.transform.gameObject.tag=="Enemy")
-            {
-                StartCoroutine(HitMark());
-                zombi.life -= 1;
-            }
-
+            fire_Shoot.transform.position = fire_Spawn.position;
         }
+
+        if(playerAim.isAim && bullets.bullets_length > 0)
+            if (playerAim.canShootA||playerAim.canShootB)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    bullets.bullets_length -= 1;
+                    animShoot.animPlayer.SetTrigger("IsShoot");
+                    shoot_Sounds.Shoot();
+                    Instantiate(fire_Shoot);
+
+
+
+                    Vector3 rayPosition = transform.TransformDirection(Vector3.forward);
+                    
+
+                    if (Physics.Raycast(transform.position, rayPosition, out hit))
+                    {
+                        print("Found an object - distance: " + hit.transform.name);
+                        Enemi_01 zombi = hit.transform.GetComponent<Enemi_01>();
+                        if (zombi != null)
+                        {
+                            zombi.life -= 2;
+                            zombi.GetComponent<MeshRenderer>().material.color = Color.red;
+                        }
+                    }
+                }
+            }
     }
 
-    IEnumerator HitMark()
-    {
-        zombiReaction.GetComponent<MeshRenderer>().material.color = Color.red;
-        yield return new WaitForSeconds(0.5f);
-        zombiReaction.GetComponent<MeshRenderer>().material.color = Color.white;
-    }
+
+   
 }

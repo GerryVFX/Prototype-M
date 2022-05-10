@@ -10,18 +10,23 @@ public class Enemi_01 : MonoBehaviour
     [SerializeField]
     Transform player;
     MovePlayer player_Speed;
-
+    Shooting ray;
+    
     NavMeshAgent nav;
 
     private void Start()
     {
         player = GameObject.Find("Player").GetComponent<Transform>();
+        ray = FindObjectOfType<Shooting>();
         player_Speed = FindObjectOfType<MovePlayer>();
         nav = GetComponent<NavMeshAgent>();
+        
     }
 
     private void Update()
     {
+        
+
         if (life <= 0)
         {
             nav.SetDestination(transform.position);
@@ -48,4 +53,8 @@ public class Enemi_01 : MonoBehaviour
             
         }
     }
+
+   
+
+   
 }

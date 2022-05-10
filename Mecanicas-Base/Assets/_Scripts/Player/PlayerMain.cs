@@ -19,6 +19,8 @@ public class PlayerMain : MonoBehaviour
     public bool medical_UsefullB;
     public bool canReloadA;
     public bool canReloadB;
+    public bool canShootA;
+    public bool canShootB;
 
     //Equipo del jugador
     public bool equipA;
@@ -63,11 +65,15 @@ public class PlayerMain : MonoBehaviour
         }
 
         //Acción de apuntado
-        if (Input.GetKey(KeyCode.Joystick1Button5)||Input.GetButton("Fire2"))
+        if(myEquip.equipA!="Empty"|| myEquip.equipB != "Empty")
         {
-            isAim = true;
+            if (Input.GetKey(KeyCode.Joystick1Button5) || Input.GetButton("Fire2"))
+            {
+                isAim = true;
+            }
+            else isAim = false;
         }
-        else isAim = false;
+        
 
         //Activar menú ráido brevemente y cambiar de equipo activo
         if (Input.GetKeyDown(KeyCode.C) && !statusMenu.inMenu)
@@ -124,6 +130,20 @@ public class PlayerMain : MonoBehaviour
         }
     }
 
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.CompareTag("Enemy"))
+    //    {
+    //        if (isAim)
+    //        {
+               
+    //                transform.LookAt(other.transform);
+                
+    //        }
+           
+    //    }
+    //}
+
     //Activar prefab de equipo con respecto al equipo  activo
     void EquipAsign()
     {
@@ -133,17 +153,39 @@ public class PlayerMain : MonoBehaviour
             {
                 all_Equip[0].SetActive(true);
                 canReloadA = true;
-                
+                canShootA = true;   
+            }
+            else
+            {
+                all_Equip[0].SetActive(false);
             }              
-            else all_Equip[0].SetActive(false);
-            if (myEquip.equipA == "FLASH") all_Equip[1].SetActive(true);
+
+            if (myEquip.equipA == "FLASH")
+            {
+                all_Equip[1].SetActive(true);
+                canReloadA = false;
+                canShootA = false;
+            }
+                
             else all_Equip[1].SetActive(false);
-            if (myEquip.equipA == "KNIFE") all_Equip[2].SetActive(true);
+            if (myEquip.equipA == "KNIFE")
+            {
+                all_Equip[2].SetActive(true);
+                canReloadA = false;
+                canShootA = false;
+            }
+                
             else all_Equip[2].SetActive(false);
-            if (myEquip.equipA == "MEDICAL") medical_UsefullA = true;
+            if (myEquip.equipA == "MEDICAL")
+            {
+                medical_UsefullA = true;
+                canReloadA = false;
+                canShootA = false;
+            }
+         
             medical_UsefullB = false;
             canReloadB = false;
-
+            canShootB = false;
         }
 
         if (equipB)
@@ -152,6 +194,7 @@ public class PlayerMain : MonoBehaviour
             {
                 all_Equip[0].SetActive(true);
                 canReloadB = true;
+                canShootB = true;
                 
             }               
             else all_Equip[0].SetActive(false);
@@ -160,6 +203,7 @@ public class PlayerMain : MonoBehaviour
                 all_Equip[1].SetActive(true);
                 medical_UsefullA = false;
                 canReloadA = false;
+                canShootA = false;
             }
                 
             else all_Equip[1].SetActive(false);
@@ -168,6 +212,7 @@ public class PlayerMain : MonoBehaviour
                 all_Equip[2].SetActive(true);
                 medical_UsefullA = false;
                 canReloadA = false;
+                canShootA = false;
             }
                 
             else all_Equip[2].SetActive(false);
@@ -175,10 +220,12 @@ public class PlayerMain : MonoBehaviour
             {
                 medical_UsefullB = true;
                 canReloadA = false;
+                canShootA = false;
             }
                 
             medical_UsefullA = false;
             canReloadA = false;
+            canShootA = false;
         }
     }
 
