@@ -63,7 +63,7 @@ public class Shooting : MonoBehaviour
                         if (zombi != null)
                         {
                             zombi.life -= 2;
-                            zombi.GetComponent<MeshRenderer>().material.color = Color.red;
+                            zombi.animZombi.SetTrigger("Hurt");
                         }
                     }
                 }

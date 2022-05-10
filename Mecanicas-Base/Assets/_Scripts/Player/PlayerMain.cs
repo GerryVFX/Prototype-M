@@ -32,7 +32,6 @@ public class PlayerMain : MonoBehaviour
 
     SoundsSystem my_sounds;
 
-    Transform enemi;
    
 
 
@@ -42,7 +41,7 @@ public class PlayerMain : MonoBehaviour
         myEquip = FindObjectOfType<EquipManager>();
         statusMenu = FindObjectOfType<GUIControl>();
         my_sounds = FindObjectOfType<SoundsSystem>();
-        enemi = GameObject.Find("Zombi1").GetComponent<Transform>();
+        
 
     }
 
@@ -51,18 +50,7 @@ public class PlayerMain : MonoBehaviour
         //Revisar que equipos estan en el menú rápido
         EquipAsign();
 
-        if (enemi)
-        {
-            //float dist = Vector3.Distance(enemi.position, transform.position);
-            //if (dist <= 3)
-            //{
-            //    if (Input.GetKeyDown(KeyCode.X))
-            //    {
-            //        transform.LookAt(enemi.position);
-            //    }
-            //}
-            //else print("Out of Range");
-        }
+       
 
         //Acción de apuntado
         if(myEquip.equipA!="Empty"|| myEquip.equipB != "Empty")
