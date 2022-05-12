@@ -9,7 +9,7 @@ public class Shooting : MonoBehaviour
     public int zombilife=8;
 
     bool shooting;
-    public RaycastHit hit;
+    
 
     //Variables para enlazar con el player
     [SerializeField]
@@ -33,9 +33,14 @@ public class Shooting : MonoBehaviour
         
     }
 
-    
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(transform.position, transform.forward * 10f);
+    }
     void Update()
     {
+        
         if (fire_Shoot != null)
         {
             fire_Shoot.transform.position = fire_Spawn.position;
@@ -51,14 +56,11 @@ public class Shooting : MonoBehaviour
                     shoot_Sounds.Shoot();
                     Instantiate(fire_Shoot);
 
+                    RaycastHit hit;
 
-
-                    Vector3 rayPosition = transform.TransformDirection(Vector3.forward);
-                    
-
-                    if (Physics.Raycast(transform.position, rayPosition, out hit))
+                    if(Physics.Raycast(transform.position, Vector3.forward, out hit, 10f))
                     {
-                        print("Found an object - distance: " + hit.transform.name);
+
                         Enemi_01 zombi = hit.transform.GetComponent<Enemi_01>();
                         if (zombi != null)
                         {
@@ -66,6 +68,23 @@ public class Shooting : MonoBehaviour
                             zombi.animZombi.SetTrigger("Hurt");
                         }
                     }
+
+
+                    //Vector3 rayPosition = transform.TransformDirection(Vector3.forward);
+
+
+
+
+                    //if (Physics.Raycast(transform.position, rayPosition, out hit))
+                    //{
+                    //    print("Found an object - distance: " + hit.transform.name);
+                    //    Enemi_01 zombi = hit.transform.GetComponent<Enemi_01>();
+                    //    if (zombi != null)
+                    //    {
+                    //        zombi.life -= 2;
+                    //        zombi.animZombi.SetTrigger("Hurt");
+                    //    }
+                    //}
                 }
             }
     }
