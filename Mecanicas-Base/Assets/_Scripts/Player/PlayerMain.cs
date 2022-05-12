@@ -30,10 +30,8 @@ public class PlayerMain : MonoBehaviour
     EquipManager myEquip;
     GUIControl statusMenu;
 
+    //Gestión de sonidos dentro de la escena
     SoundsSystem my_sounds;
-
-   
-
 
     private void Start()
     {
@@ -41,16 +39,12 @@ public class PlayerMain : MonoBehaviour
         myEquip = FindObjectOfType<EquipManager>();
         statusMenu = FindObjectOfType<GUIControl>();
         my_sounds = FindObjectOfType<SoundsSystem>();
-        
-
     }
 
     void Update()
     {
         //Revisar que equipos estan en el menú rápido
         EquipAsign();
-
-       
 
         //Acción de apuntado
         if(myEquip.equipA!="Empty"|| myEquip.equipB != "Empty")
@@ -62,7 +56,6 @@ public class PlayerMain : MonoBehaviour
             else isAim = false;
         }
         
-
         //Activar menú ráido brevemente y cambiar de equipo activo
         if (Input.GetKeyDown(KeyCode.C) && !statusMenu.inMenu)
         {
@@ -118,26 +111,12 @@ public class PlayerMain : MonoBehaviour
         }
     }
 
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.CompareTag("Enemy"))
-    //    {
-    //        if (isAim)
-    //        {
-               
-    //                transform.LookAt(other.transform);
-                
-    //        }
-           
-    //    }
-    //}
-
     //Activar prefab de equipo con respecto al equipo  activo
     void EquipAsign()
     {
-        if (equipA)
+        if (equipA) //Para el panel A
         {
-            if (myEquip.equipA == "GUN")
+            if (myEquip.equipA == "GUN") //Pistola
             {
                 all_Equip[0].SetActive(true);
                 canReloadA = true;
@@ -148,23 +127,23 @@ public class PlayerMain : MonoBehaviour
                 all_Equip[0].SetActive(false);
             }              
 
-            if (myEquip.equipA == "FLASH")
+            if (myEquip.equipA == "FLASH") //Linterna
             {
                 all_Equip[1].SetActive(true);
                 canReloadA = false;
                 canShootA = false;
-            }
-                
+            }           
             else all_Equip[1].SetActive(false);
-            if (myEquip.equipA == "KNIFE")
+
+            if (myEquip.equipA == "KNIFE") //Cuchillo
             {
                 all_Equip[2].SetActive(true);
                 canReloadA = false;
                 canShootA = false;
-            }
-                
+            }     
             else all_Equip[2].SetActive(false);
-            if (myEquip.equipA == "MEDICAL")
+
+            if (myEquip.equipA == "MEDICAL") //Equipo médico Full
             {
                 medical_UsefullA = true;
                 canReloadA = false;
@@ -176,7 +155,7 @@ public class PlayerMain : MonoBehaviour
             canShootB = false;
         }
 
-        if (equipB)
+        if (equipB) //Para el panel B
         {
             if (myEquip.equipB == "GUN")
             {

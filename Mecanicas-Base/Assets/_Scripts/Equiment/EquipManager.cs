@@ -6,8 +6,10 @@ using TMPro;
 public class EquipManager : MonoBehaviour
 {
     //Gestion de equipo
-    public bool gun, bullets_gun, flash, knife, shootgun, rifle, axe, hardgun,
-                medical;
+    //Validación de obtención de armas;
+    public bool gun, flash, knife, shootgun, rifle, axe, hardgun, bullets_gun, medical;
+
+    //Imagenes para el menú de equipo
     public GameObject[] wepons_Panels;
 
     //Para asignar a menú rápido
@@ -18,7 +20,6 @@ public class EquipManager : MonoBehaviour
     //Para realizar el cambio de imagenes en el menú rápido
     public Image equip1;
     public Image equip2;
-
     public Sprite[] equipIMG;
 
     //Control de balas y su visualización en menú rápido
@@ -28,10 +29,14 @@ public class EquipManager : MonoBehaviour
     public TMP_Text[] bullets;
     public TMP_Text bullets_reservText;
 
+    //Conrtrol para que el jugador pueda recargar balas
+    PlayerMain equi_player;
+
+    //Control de equipos médicos para restaurar salud;
     public int medical_reserv = 0;
     public TMP_Text medical_Cases;
 
-    PlayerMain equi_player;
+    //---------------------------------------------------------
     //Menú ráido vacio
     private void Start()
     {
@@ -42,26 +47,26 @@ public class EquipManager : MonoBehaviour
         bullets_length = 4;
     }
 
-    //Gestión de recursos
-    
-   
-    
     //Revisión de imagenes asignadas a menú rápido
     private void Update()
     {
-        
+        //Actualización de número de balas en reserva y en el cargador
         bullets[0].text = "x " + bullets_length.ToString();
         bullets[1].text = "x " + bullets_length.ToString();
         bullets[2].text = "x " + bullets_length.ToString();
-
         bullets_reservText.text = "x " + bullets_reserv.ToString();
 
+        //Actualización de número de equipos médicos en reserva
         medical_Cases.text = "x " + medical_reserv.ToString();
-        
+
+        //Activación de armas en el menú de equipo
         EquipManagment();
+
+        //Actualización de mimágenes en el menú rápido
         ImageEquipAsign();    
     }
 
+    //Activación de armas en el menú de equipo
     public void EquipManagment()
     {
         if (knife)
@@ -150,6 +155,7 @@ public class EquipManager : MonoBehaviour
         bullets_Cases[1].SetActive(false);
     }
 
+    //Para medicamento Full
     public void EquipMedicalA()
     {
         if (medical_reserv > 0)
@@ -176,14 +182,12 @@ public class EquipManager : MonoBehaviour
                 lastequip = equipB;
                 equipA = lastequip;
                 if (lastequip == "GUN") bullets_Cases[0].SetActive(true);
-
             }
             equipB = "MEDICAL";
             equi_player.canReloadB = false;
             bullets_Cases[1].SetActive(false);
         }
         else if (equipB == "MEDICAL" && medical_reserv <= 0) equipB = "Empty";
-
     }
 
     //Relación equipo en menú ráido e imagens de referencia

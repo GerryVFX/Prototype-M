@@ -80,24 +80,28 @@ public class MovePlayer : MonoBehaviour
     //Movimiento para el control moderno
     private void MoveWhitModern()
     {
+        //Asignación del input a la dirección del jugador
         move_x = Input.GetAxis("Horizontal");
         move_z = Input.GetAxis("Vertical");
 
         player_direction = new Vector3(move_x, 0, move_z);
         player_direction = Vector3.ClampMagnitude(player_direction, 1);
 
+        //Esto evita que la dirección del jugador cambie de pornto con el cambio de cámara
         if(move_x==0 && move_z == 0)
         {
             CamDirection();
         }
         
-
+        //Asiganción de movimiento con respecto a la cámara
         movePLayer = player_direction.x * camRight + player_direction.z * camFoward;
         movePLayer = movePLayer * player_speed;        
         player_controller.transform.LookAt(player_controller.transform.position + movePLayer);
 
+        //Dar gravedad al jugador
         movePLayer.y = -gravity * Time.deltaTime;
 
+        //Aplicar el movimiento
         player_controller.Move(movePLayer * Time.deltaTime);
     }
      //Movimiento relativo a la cámara   
@@ -144,6 +148,7 @@ public class MovePlayer : MonoBehaviour
         float h = move_x * Time.deltaTime * turnSpeed;
         float v = move_z * Time.deltaTime * player_speed;
 
+        //Validación del movimiento hacia delante o hacia atras
         moving_Foward = false;
         moving_Backward = false;
 
@@ -176,6 +181,7 @@ public class MovePlayer : MonoBehaviour
         move.y -= gravity * Time.deltaTime;
         player_controller.Move(move);
 
+        //Para la rotación del jugador en Tanque
         Vector3 turn = new Vector3(0, h, 0);
         transform.Rotate(turn);
     }
