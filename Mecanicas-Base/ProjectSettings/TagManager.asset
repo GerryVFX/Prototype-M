@@ -3,7 +3,21 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - InactiveCamera
+  - CurrentCamera
+  - EquipA
+  - EquipB
+  - Unequip
+  - ActiveMenu
+  - InactiveMenu
+  - Bullets
+  - knife
+  - gun
+  - medical
+  - ActivePanel
+  - InactivePanel
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -11,7 +25,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - MiniMap
   - 
   - 
   - 
