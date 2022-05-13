@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GUIControl : MonoBehaviour
 {
+    //Control de sonidos
     SoundsSystem  menu_Sounds;
 
     //Variables del menú de status en menú rápido
@@ -19,6 +20,7 @@ public class GUIControl : MonoBehaviour
     public GameObject equip_Menu, invent_Menu, file_Menu;
     public bool inMenu;
 
+    //Control de textos narrativos
     TextStory desactiveText;
     public Camera camera_Map_Zoom;
     public bool inZoom;
@@ -81,6 +83,7 @@ public class GUIControl : MonoBehaviour
         StartCoroutine(ActiveStatus());
     }
 
+    //Menú de equipo
     public void EquipMenu()
     {
         if (!inMenu)
@@ -116,6 +119,7 @@ public class GUIControl : MonoBehaviour
         }
     }
 
+    //Menu de inventario
     public void InventMenu()
     {
         if (!inMenu)
@@ -151,16 +155,15 @@ public class GUIControl : MonoBehaviour
         }
     }
 
+    //Menu de documentos
     public void FileMenu()
     {
         if (!inMenu)
         {
             inMenu = true;
             file_Menu.tag = "ActiveMenu";
-            file_Menu.SetActive(true);
-            
-            status.SetActive(true);
-            
+            file_Menu.SetActive(true);         
+            status.SetActive(true);         
         }
         else
         {
@@ -171,8 +174,7 @@ public class GUIControl : MonoBehaviour
                 equip_Menu.SetActive(false);
                 equip_Menu.tag = "InactiveMenu";
                 file_Menu.SetActive(true);
-                file_Menu.tag = "ActiveMenu";
-               
+                file_Menu.tag = "ActiveMenu";  
             }
 
             else if (file_Menu.tag == "ActiveMenu")
@@ -181,13 +183,12 @@ public class GUIControl : MonoBehaviour
                 file_Menu.tag = "InactiveMenu";
                 desactiveText.DesactivePanels();
                 file_Menu.SetActive(false);
-                
                 status.SetActive(false);
             }
         }
     }
 
-
+    //Botones para asignar equipo
     public void ActionsGun()
     {        
             equip_Actions[0].SetActive(true);   
@@ -213,10 +214,9 @@ public class GUIControl : MonoBehaviour
         equip_Actions[2].SetActive(false);
     }
 
-
+    //Boton para activar zoom en el mapa
     public void ZommCameraIn()
     {
-
         if (camera_Map_Zoom.orthographicSize >= 14)
         {
             inZoom = true;
@@ -227,9 +227,6 @@ public class GUIControl : MonoBehaviour
         {
             inZoom = false;
             camera_Map_Zoom.orthographicSize = 14;
-        } 
-            
-    }
-
-   
+        }        
+    } 
 }

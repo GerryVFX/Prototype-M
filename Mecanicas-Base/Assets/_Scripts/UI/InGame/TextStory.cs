@@ -5,39 +5,24 @@ using TMPro;
 
 public class TextStory : MonoBehaviour
 {
+    //Paneles para almacenar archivos
     public GameObject[] Paneles;
 
+    //Contenedor de texto
     public TMP_Text content_Text;
-    public TMP_Text[] text_Story;
+    public TMP_Text[] text_Story;//Colección de textos para la historia
 
-    GUIControl close_Menu;
-    private void Start()
-    {
-        close_Menu = FindObjectOfType<GUIControl>();
-    }
-
-    //private void Update()
-    //{
-    //    if (close_Menu.inMenu == false)
-    //    {
-    //        DesactivePanels();
-    //    }
-    //}
-    public void ActivePanelText()
-    {
-        GameObject activePanel = GameObject.FindGameObjectWithTag("ActivePanel");
-        
-    }
-
-    public void TextC1T1()
+    //Archivos primera carpeta
+    public void TextC1T1() //Archivo 1
     {
         content_Text.text = text_Story[1].text;
     }
-    public void TextC1T2()
+    public void TextC1T2() //Archivo 2
     {
         content_Text.text = text_Story[2].text;
     }
 
+    //Para desactivar textos si se cierra el menú
     public void DesactivePanels()
     {
         if (Paneles[0].tag != "ActivePanel")
@@ -51,9 +36,8 @@ public class TextStory : MonoBehaviour
             content_Text.text = "";
         }
     }
-    public void Panel1()
+    public void Panel1() //Para activar el panel de archivos de la primera carpeta
     {
-
         if (Paneles[1].tag != "ActivePanel")
         {
             GameObject lastActive = GameObject.FindGameObjectWithTag("ActivePanel");

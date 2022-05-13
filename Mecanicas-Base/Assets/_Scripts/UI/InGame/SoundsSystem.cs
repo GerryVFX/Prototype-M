@@ -5,13 +5,14 @@ using UnityEngine;
 public class SoundsSystem : MonoBehaviour
 {
     AudioSource my_Source;
-    public AudioClip[] my_Clips;
+    public AudioClip[] my_Clips; //Colección de sonidos para la escena
     
     void Start()
     {
         my_Source = GetComponent<AudioSource>();
     }
 
+    //Control de sonidos en esta escena
     public void SoundMenu()
     {
         my_Source.clip = my_Clips[0];
@@ -47,5 +48,4 @@ public class SoundsSystem : MonoBehaviour
         my_Source.clip = my_Clips[5];
         my_Source.Play();
     }
-
 }

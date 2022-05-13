@@ -148,8 +148,7 @@ public class PlayerMain : MonoBehaviour
                 medical_UsefullA = true;
                 canReloadA = false;
                 canShootA = false;
-            }
-         
+            }        
             medical_UsefullB = false;
             canReloadB = false;
             canShootB = false;
@@ -157,7 +156,7 @@ public class PlayerMain : MonoBehaviour
 
         if (equipB) //Para el panel B
         {
-            if (myEquip.equipB == "GUN")
+            if (myEquip.equipB == "GUN") //Pistola
             {
                 all_Equip[0].SetActive(true);
                 canReloadB = true;
@@ -165,31 +164,31 @@ public class PlayerMain : MonoBehaviour
                 
             }               
             else all_Equip[0].SetActive(false);
-            if (myEquip.equipB == "FLASH")
+
+            if (myEquip.equipB == "FLASH") //Linterna
             {
                 all_Equip[1].SetActive(true);
                 medical_UsefullA = false;
                 canReloadA = false;
                 canShootA = false;
-            }
-                
+            }              
             else all_Equip[1].SetActive(false);
-            if (myEquip.equipB == "KNIFE")
+
+            if (myEquip.equipB == "KNIFE") //Cuchillo
             {
                 all_Equip[2].SetActive(true);
                 medical_UsefullA = false;
                 canReloadA = false;
                 canShootA = false;
-            }
-                
+            }               
             else all_Equip[2].SetActive(false);
-            if (myEquip.equipB == "MEDICAL")
+
+            if (myEquip.equipB == "MEDICAL") //Medicamento Full
             {
                 medical_UsefullB = true;
                 canReloadA = false;
                 canShootA = false;
-            }
-                
+            }           
             medical_UsefullA = false;
             canReloadA = false;
             canShootA = false;
@@ -211,6 +210,7 @@ public class PlayerMain : MonoBehaviour
         }
     }
 
+    //Uso de médicamento 
     public void UsingMedical()
     {
         if (myEquip.medical_reserv > 0)
@@ -234,6 +234,7 @@ public class PlayerMain : MonoBehaviour
         }
     }
 
+    //Acción de recargar
     public void Reload()
     {
         if (myEquip.bullets_reserv > 0)
@@ -245,6 +246,4 @@ public class PlayerMain : MonoBehaviour
             myEquip.bullets_reserv -= maxReload;
         }
     }
-
-
 }
