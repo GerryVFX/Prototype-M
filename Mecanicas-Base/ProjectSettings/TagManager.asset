@@ -18,6 +18,7 @@ TagManager:
   - ActivePanel
   - InactivePanel
   - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX

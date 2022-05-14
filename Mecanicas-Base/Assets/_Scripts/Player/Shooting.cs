@@ -13,6 +13,14 @@ public class Shooting : MonoBehaviour
     EquipManager bullets;
     AnimatePlayer animShoot;
 
+    public GameObject bullet;
+    public Transform bulet_Spawn;
+
+    public float shot_Force = 1500f;
+    public float shot_Rate = 0.5f;
+
+    private float shotRateTime = 0;
+
     //Control de sonidos
     SoundsSystem shoot_Sounds;
 
@@ -31,36 +39,51 @@ public class Shooting : MonoBehaviour
 
     void Update()
     {
-        //Disparo por medio de rayCast
+        //Efecto del disparo
         if (fire_Shoot != null)
         {
             fire_Shoot.transform.position = fire_Spawn.position;
         }
 
+        //Instanciar bala y disparo
         if(playerAim.isAim && bullets.bullets_length > 0)
             if (playerAim.canShootA||playerAim.canShootB)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    bullets.bullets_length -= 1;
-                    animShoot.animPlayer.SetTrigger("IsShoot");
-                    shoot_Sounds.Shoot();
-                    Instantiate(fire_Shoot);
-
-                    RaycastHit hit;
-
-                    if(Physics.Raycast(transform.position, Vector3.forward, out hit, 10f))
+                    if (Time.time > shotRateTime)
                     {
-
-                        Enemi_01 zombi = hit.transform.GetComponent<Enemi_01>();
-                        if (zombi != null)
-                        {
-                            zombi.life -= 2;
-                            zombi.animZombi.SetTrigger("Hurt");
-                        }
+                        //Bala física
+                        bullets.bullets_length -= 1;
+                        animShoot.animPlayer.SetTrigger("IsShoot");
+                        shoot_Sounds.Shoot();
+                        Instantiate(fire_Shoot);
+                        GameObject new_bullet;
+                        new_bullet = Instantiate(bullet, bulet_Spawn.position, bulet_Spawn.rotation);
+                        new_bullet.GetComponent<Rigidbody>().AddForce(bulet_Spawn.forward * shot_Force);
+                        shotRateTime = Time.time + shot_Rate;
+                        Destroy(new_bullet, 3.5f);
                     }
+
+                    //------------------------------------------------- SI se hace con raycast
+                    //bullets.bullets_length -= 1;
+                    //animShoot.animPlayer.SetTrigger("IsShoot");
+                    //shoot_Sounds.Shoot();
+                    //Instantiate(fire_Shoot);
+
+                    //RaycastHit hit;
+
+                    //if(Physics.Raycast(transform.position, Vector3.forward, out hit, 10f))
+                    //{
+
+                    //    Enemi_01 zombi = hit.transform.GetComponent<Enemi_01>();
+                    //    if (zombi != null)
+                    //    {
+                    //        zombi.life -= 2;
+                    //        zombi.animZombi.SetTrigger("Hurt");
+                    //    }
+                    //}
                 }
             }
     }
- 
 }
